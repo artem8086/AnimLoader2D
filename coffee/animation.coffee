@@ -81,11 +81,14 @@ class Animation
 		this
 
 	set: (name, data = @data) ->
-		@anim = data?[name]
+		anim = data?[name]
 		@reset()
-		if @anim
-			@duration = if @anim then @anim.duration else 0
-			@frame = @anim.frames
+		if anim
+			@duration = anim.duration || 0
+			@frame = anim.frames
+		else
+			@duration = 0
+			@frame = null
 		this
 
 	play: (time) ->
@@ -102,8 +105,7 @@ class Animation
 		true
 
 	animate: (node, nodePath = node.nodePath, nodeName = node.nodeName) ->
-		frame = @frame
-		if frame
+		if frame = @frame
 			timestops = frame[nodePath] || frame[nodeName]
 			if timestops
 				delta = @deltaTime

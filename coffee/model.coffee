@@ -46,8 +46,7 @@ class ModelData
 							nodesLoad node.after, node.nodePath + '>'
 
 				if @bones
-					for nodes in @bones
-						nodesLoad nodes
+					nodesLoad @bones
 
 
 drawTypeObj =

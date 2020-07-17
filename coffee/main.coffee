@@ -111,13 +111,11 @@ $(document).ready ->
 		.on 'input change', ->
 			camera.z = + $(this).val()
 
-	$('.js-model-select').click (e) ->
-		e.stopPropagation()
+	$('.js-model-select').click ->
 		modelData = new ModelData
 		modelFile = $(this).data 'file'
 
-	$('.js-anim-select').click (e) ->
-		e.stopPropagation()
+	$('.js-anim-select').click ->
 		file = $(this).data 'file'
 		model.animation.data = new AnimationData
 		model.animation.data.load loader, file
