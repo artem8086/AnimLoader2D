@@ -1,0 +1,76 @@
+include animations
+
+.navbar.navbar-expand-lg.navbar-light.bg-light
+	button.navbar-toggler(
+		type="button"
+		data-toggle="collapse"
+		data-target="#navbarToggler"
+		aria-controls="navbarToggler"
+		aria-expanded="false"
+		aria-label="Toggle navigation")
+		span.navbar-toggler-icon
+	a.navbar-brand(href="#") AnimLoader2D
+
+	#navbarToggler.collapse.navbar-collapse
+		ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+			li.nav-item.dropdown
+				a.nav-link.dropdown-toggle#navbarDropdown(
+					href="#"
+					role="button"
+					data-toggle="dropdown"
+					aria-haspopup="true"
+					aria-expanded="false")
+					| Модель
+				.dropdown-menu(aria-labelledby="navbarDropdown")
+					each model in models
+						a.dropdown-item.js-model-select(href="#" data-file=model.model)= model.name
+			li.nav-item.dropdown
+				a.nav-link.dropdown-toggle#navbarDropdown(
+					href="#"
+					role="button"
+					data-toggle="dropdown"
+					aria-haspopup="true"
+					aria-expanded="false")
+					| Анимация
+				.dropdown-menu(aria-labelledby="navbarDropdown")
+					each anim in animations
+						a.dropdown-item.js-anim-select(href="#" data-file=anim.file)= anim.name
+			li.nav-item.dropdown
+				a.nav-link.dropdown-toggle#navbarDropdown(
+					href="#"
+					role="button"
+					data-toggle="dropdown"
+					aria-haspopup="true"
+					aria-expanded="false")
+					| Кадр
+				.dropdown-menu.js-frame-container(aria-labelledby="navbarDropdown")
+			.nav-item.mx-1
+				.input-group
+					.input-group-prepend
+						span.input-group-text Z
+					input.form-control.js-z-number(type='number' min="-10000" max="10000")
+			li.nav-item.dropdown
+				a.nav-link.dropdown-toggle#navbarDropdown(
+					href="#"
+					role="button"
+					data-toggle="dropdown"
+					aria-haspopup="true"
+					aria-expanded="false")
+					| Параметры
+				.dropdown-menu.px-2(aria-labelledby="navbarDropdown")
+					.nav-item.input-group.mb-1
+						input(type='text' class='form-control bg-light' disabled  value='Центр')
+						.input-group-append
+							.input-group-text
+								input.js-draw-origin(type='checkbox' checked)
+					.nav-item.input-group.mb-1
+						input(type='text' class='form-control bg-light' disabled  value='Обновлять')
+						.input-group-append
+							.input-group-text
+								input.js-refresh-model(type='checkbox' checked)
+					button.nav-item.btn.btn-primary.js-reset-pos(type="button") Сбросить позицию
+					a.nav-link.js-full-screen(href="#") Полный экран
+			button.nav-item.btn.btn-success.js-anim-select.js-anim-reset(
+				type="button"
+				data-file="anims/banny")
+				| Обновить анимацию
