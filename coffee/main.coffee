@@ -7,7 +7,7 @@ $(document).ready ->
 	canvas = $canvas.get 0
 	context = canvas.getContext '2d', alpha: false
 
-	modelFile = 'models/arena'
+	modelFile = 'models/banny'
 	loader = new Loader
 	model = new Model
 	modelData = new ModelData
@@ -17,7 +17,7 @@ $(document).ready ->
 		g: context
 		x: 0
 		y: 0
-		z: 0
+		z: 1
 
 	resize = ->
 		canvas.width = $(window).width()
@@ -73,7 +73,7 @@ $(document).ready ->
 
 		model.drawParts context, camera
 
-		Model.transform(0, 0, 0, camera)
+		Model.transform(0, 0, 1, camera)
 			.apply context
 
 		model.draw2D context
@@ -135,8 +135,9 @@ $(document).ready ->
 			clearInterval mRefreshInterval
 
 	$('.js-reset-pos').click ->
-		camera.x = camera.y = camera.z = 0
-		$('.js-z-number').val '0'
+		camera.x = camera.y = 0
+		camera.z = 1
+		$('.js-z-number').val '1'
 
 	fullscreen = false
 	$('.js-full-screen').click ->

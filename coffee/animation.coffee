@@ -80,9 +80,9 @@ class Animation
 		@deltaTime = 0
 		this
 
-	set: (name, data = @data) ->
+	set: (name, no_reset = false, data = @data) ->
 		anim = data?[name]
-		@reset()
+		@reset() unless no_reset
 		if anim
 			@duration = anim.duration || 0
 			@frame = anim.frames

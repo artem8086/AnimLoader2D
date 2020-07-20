@@ -280,15 +280,15 @@ drawPartType =
 		v = verts[@verts[0]]
 		xc = camera.x
 		yc = camera.y
-		zt = Z_ORIGIN + camera.z
-		z = ((v.z || 0) + zt) * Z_TRANSFORM
+		zt = camera.z
+		z = ((v.z || 1) * zt)
 		x = ((v.x || 0) + xc) * z
 		y = ((v.y || 0) + yc) * z
 		g.moveTo x, y
 		l = @verts.length - 1
 		for i in [1..l]
 			v = verts[@verts[i]];
-			z = ((v.z || 0) + zt) * Z_TRANSFORM
+			z = ((v.z || 1) * zt)
 			x = ((v.x || 0) + xc) * z
 			y = ((v.y || 0) + yc) * z
 			g.lineTo x, y
@@ -310,7 +310,7 @@ drawPartType =
 			c =
 				x: camera.x + (v.x || 0)
 				y: camera.y + (v.y || 0)
-				z: camera.z + (v.z || 0)
+				z: camera.z * (v.z || 1)
 
 			part = parts[@part]
 			if part
@@ -376,9 +376,6 @@ drawPart = (g, model, camera, opacity) ->
 	g.restore()
 	this
 
-Z_TRANSFORM = 0.0002
-Z_ORIGIN = 1 / Z_TRANSFORM
-
 trsfObj =
 	x: 0
 	y: 0
@@ -389,7 +386,7 @@ trsfObj =
 
 class Model
 	@transform: (x, y, z, camera) ->
-		z = (Z_ORIGIN + z + camera.z) * Z_TRANSFORM
+		z = camera.z * z
 		trsfObj.x = (x + camera.x) * z
 		trsfObj.y = (y + camera.y) * z
 		trsfObj.scale = z
@@ -427,6 +424,6 @@ class Model
 transform = Model.transform
 
 transformVert = (v, camera) ->
-	transform v.x || 0, v.y || 0, v.z || 0, camera
+	transform v.x || 0, v.y || 0, v.z || 1, camera
 
 export { ModelData, Model }
