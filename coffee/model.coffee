@@ -14,27 +14,34 @@ class ModelData
 
 	load: (loader, file) ->
 		loader.loadJson file, (data) =>
-			if data
-				for key, value of data
-					this[key] = value
+			@loadData loader, data
 
-				if @images
-					imagesData = @images
-					@images = []
-					for key, image of imagesData
-						@images[key] = loader.loadImage image
+	loadData: (loader, data) ->
+		if data
+			for key, value of data
+				this[key] = value
 
-				if @sprites
-					spritesData = @sprites
-					@sprites = []
-					for key, sprite of spritesData
-						@sprites[key] = Sprite.load loader, sprite
+			if @images
+				imagesData = @images
+				@images = []
+				for key, image of imagesData
+					@images[key] = loader.loadImage image
 
-				if @models
-					modelsData = @models
-					@models = []
-					for key, model of modelsData
-						@models[key] = ModelData.load loader, model
+			if @sprites
+				spritesData = @sprites
+				@sprites = []
+				for key, sprite of spritesData
+					@sprites[key] = Sprite.load loader, sprite
+
+			if @models
+				modelsData = @models
+				@models = []
+				for key, model of modelsData
+					@models[key] = 
+						if typeof model == 'string'
+							ModelData.load loader, model
+						else
+							@loadData.call new ModelData, loader, model
 
 				nodesLoad = (nodes, nodePath = '') ->
 					for name, node of nodes
@@ -47,6 +54,7 @@ class ModelData
 
 				if @bones
 					nodesLoad @bones
+		this
 
 
 drawTypeObj =
@@ -325,7 +333,8 @@ drawPartType =
 	node: (g, verts, camera, model, opacity) ->
 		transformVert verts[@vert], camera
 			.apply g
-		drawTypeObj.node.call this, g, model, opacity
+		drawNode.call this, g, model, opacity
+		# drawTypeObj.node.call this, g, model, opacity
 		this
 
 	attach: (g, model, opacity) ->
